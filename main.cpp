@@ -103,6 +103,7 @@ void generateBoard(string arr[][COLS], Ship ships[]){
                                  if((ships[x].getRow()+ships[x].getSpaces()-1)==endRow){
                                     cout << "Current Row Column : " << ships[x].getRow() << " and " << ships[x].getCol() << endl;
                                     ships[x].setRow(counter);
+                                    y = ships[x].getRow();
                                     if(ships[x].getCol()==9){
                                         ships[x].setCol(0);
                                     }
@@ -133,21 +134,12 @@ void generateBoard(string arr[][COLS], Ship ships[]){
             int endCol = ((ships[x].getSpaces()-1)+ships[x].getCol());
 
             for(int y = ships[x].getCol(); y<endCol+1; y++){ 
-                //rerun the original col determing logic
                     int counter = 0;
                     while(arr[ships[x].getRow()][y] != "[ ]"){ //while it's still not open
-                                //cout << "Second while loop..." << endl;  
-
-                                // **************************************
-                                //[FIX ME] test for new cols but will wrap
-                                // **************************************
-
-                                //psuedocode
-                                //test every column
-                                //if that does not work, move it along the rows
                                 if((ships[x].getCol()+ships[x].getSpaces()-1)==endCol){
                                     cout << "Current Row Column : " << ships[x].getRow() << " and " << ships[x].getCol() << endl;
                                     ships[x].setCol(counter);
+                                    y = ships[x].getCol();
                                     if(ships[x].getRow()==9){
                                         ships[x].setRow(0);
                                     }
@@ -163,9 +155,6 @@ void generateBoard(string arr[][COLS], Ship ships[]){
                                      cout << "Repositioning..." << endl;
                                      cout << "New Row Column : " << ships[x].getRow() << " and " << ships[x].getCol() << endl;
                                 }
-                                //keep generating numbers until it does fit  //keep generating numbers until it does fit
-                                //loading();
-                                //cout << "This is the col: " << ships[x].getCol() << endl;
                                 
                     }
 
