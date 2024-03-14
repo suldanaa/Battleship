@@ -12,6 +12,7 @@ void generateBoard(string[][COLS], Ship[]);
 void generatePosition(int, string);
 int randomNum(int, int);
 void prompt();
+//might make a converter for ASCII to actual rows
 
 int main(){
    
@@ -227,24 +228,28 @@ void generateBoard(string arr[][COLS], Ship ships[]){
     prompt();
     cin >> rowCol;
     //cout << "[" << rowCol[0] << "," << rowCol[1] << "]" << endl;
+    if(rowCol[0]=='Q'){
+        cout << "Quitting...";
+        exit(0);
+    }
+    else{
+        for(int x = 0; x<ROWS; x++){
+            if(rowCol[0] == (char)(65+x)){ 
 
-    for(int x = 0; x<ROWS; x++){
-        if(rowCol[0] == (char)(65+x)){ 
+                int row = x;
+                int col = rowCol[1]-48;
 
-            int row = x;
-            int col = rowCol[1]-48;
-
-            if(arr[row][col] != "[ ]"){
-                arr[row][col] = "[X]";
-               
-            }
-            else{
-                arr[row][col] = "[O]";
+                if(arr[row][col] != "[ ]"){
+                    arr[row][col] = "[X]";
+                
+                }
+                else{
+                    arr[row][col] = "[O]";
+                }
             }
         }
-    }
 
-    	cout << "  0  1  2  3  4  5  6  7  8  9\n";
+    cout << "  0  1  2  3  4  5  6  7  8  9\n";
 	for (int r = 0; r < ROWS; r++)
 	{
         //statement controls the side numbers/letters
@@ -257,10 +262,9 @@ void generateBoard(string arr[][COLS], Ship ships[]){
 		}
 
 		cout << endl;
-	}
     }
-   
-    
+    }
+    }
 }
 
 //random number generator
@@ -280,5 +284,3 @@ void prompt(){
     cout << "EXAMPLE RESPONSES: A5, B4" << endl;
     cout << ">> ";
 };
-
-
