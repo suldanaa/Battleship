@@ -11,7 +11,7 @@ const int SIZE = 5;
 void generateBoard(string[][COLS], Ship[]);
 void generatePosition(int, string);
 int randomNum(int, int);
-
+void prompt();
 
 int main(){
    
@@ -20,29 +20,30 @@ int main(){
     //Initialize 5 instances of the ship class:
     Ship frigate;
     frigate.setLetter("F");
-    frigate.setSpaces(2); //good, 2
+    frigate.setSpaces(2); 
 
     Ship sub;
     sub.setLetter("S");
-    sub.setSpaces(3); //good, 3
+    sub.setSpaces(3); 
 
     Ship destroyer;
     destroyer.setLetter("D");
-    destroyer.setSpaces(3); //good, 3
+    destroyer.setSpaces(3); 
 
     Ship battleship;
     battleship.setLetter("B");
-    battleship.setSpaces(4); //good
+    battleship.setSpaces(4);
 
     Ship aircraft;
     aircraft.setLetter("A");
-    aircraft.setSpaces(5); //godd
+    aircraft.setSpaces(5); 
     
     //array of ships
     Ship ships[SIZE] = {frigate, sub, destroyer, battleship, aircraft};
 
     generateBoard(board, ships);
     
+
     return 0;
 }
 
@@ -87,7 +88,7 @@ void generateBoard(string arr[][COLS], Ship ships[]){
                     //cout << "Determining spaces the ship will need horizontally..." << endl;
                 }
         }
-
+        
             // now check if the next rows are occupied
             if(x!=0){
             
@@ -119,9 +120,6 @@ void generateBoard(string arr[][COLS], Ship ships[]){
                                      cout << "Repositioning..." << endl;
                                      cout << "New Row Column : " << ships[x].getRow() << " and " << ships[x].getCol() << endl;
                                 }
-                            //cout << "First while loop..." << endl;  
-                            //loading();
-                            //cout << "This is the row: " << ships[x].getRow() << endl;
                             
                     }
              }
@@ -206,7 +204,10 @@ void generateBoard(string arr[][COLS], Ship ships[]){
 	cout << "  0  1  2  3  4  5  6  7  8  9\n";
 	for (int r = 0; r < ROWS; r++)
 	{
-		cout << r;
+        //statement controls the side numbers/letters
+        //65 is the ASCII for the uppcase A so the loop
+        //iterates through the alphabet
+		cout << (char)(65+r);
 		for (int c = 0; c < COLS; c++)
 		{
 			cout << arr[r][c];
@@ -214,6 +215,52 @@ void generateBoard(string arr[][COLS], Ship ships[]){
 
 		cout << endl;
 	}
+
+
+    //***********************************
+    //*need to create a ending condition*
+    //***********************************
+    
+    while(true){ //<----
+    //C string wil allow you to isolate each part of the position
+    char rowCol[2];
+    prompt();
+    cin >> rowCol;
+    //cout << "[" << rowCol[0] << "," << rowCol[1] << "]" << endl;
+
+    for(int x = 0; x<ROWS; x++){
+        if(rowCol[0] == (char)(65+x)){ 
+
+            int row = x;
+            int col = rowCol[1]-48;
+
+            if(arr[row][col] != "[ ]"){
+                arr[row][col] = "[X]";
+               
+            }
+            else{
+                arr[row][col] = "[O]";
+            }
+        }
+    }
+
+    	cout << "  0  1  2  3  4  5  6  7  8  9\n";
+	for (int r = 0; r < ROWS; r++)
+	{
+        //statement controls the side numbers/letters
+        //65 is the ASCII for the uppcase A so the loop
+        //iterates through the alphabet
+		cout << (char)(65+r);
+		for (int c = 0; c < COLS; c++)
+		{
+			cout << arr[r][c];
+		}
+
+		cout << endl;
+	}
+    }
+   
+    
 }
 
 //random number generator
@@ -227,4 +274,11 @@ int randomNum(int index, int upperbound){
     //cout << "We used the randomNum function!" << endl;
     return arr[index];
 }
+
+void prompt(){
+    cout << "\nEnter the position you'd like to attack OR Enter Q to Quit" << endl;
+    cout << "EXAMPLE RESPONSES: A5, B4" << endl;
+    cout << ">> ";
+};
+
 
