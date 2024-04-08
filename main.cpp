@@ -12,6 +12,7 @@ void generateBoard(string[][COLS], Ship[]);
 void generatePosition(int, string);
 int randomNum(int, int);
 void prompt();
+void ending();
 //might make a converter for ASCII to actual rows
 
 int main(){
@@ -216,20 +217,24 @@ void generateBoard(string arr[][COLS], Ship ships[]){
 
 		cout << endl;
 	}
-
-
-    //***********************************
-    //*need to create a ending condition*
-    //***********************************
     
+    int miss=0;
+    int hit=0;
     while(true){ //<----
     //C string wil allow you to isolate each part of the position
     char rowCol[2];
     prompt();
     cin >> rowCol;
     //cout << "[" << rowCol[0] << "," << rowCol[1] << "]" << endl;
-    if(rowCol[0]=='Q'){
+    if(rowCol[0]=='-'){
         cout << "Quitting...";
+        exit(0);
+    }
+    else if(rowCol[0]>(char)74 || rowCol[0]<(char)65){
+        cout << "Only input letters between A-J for the first coordinate!" << endl;
+    }
+    else if(miss>=14){
+        ending();
         exit(0);
     }
     else{
@@ -239,16 +244,21 @@ void generateBoard(string arr[][COLS], Ship ships[]){
                 int row = x;
                 int col = rowCol[1]-48;
 
-                if(arr[row][col] != "[ ]"){
+                if(arr[row][col] != "[ ]" && arr[row][col] != "[O]" && arr[row][col] != "[X]"){
                     arr[row][col] = "[X]";
-                
+                    cin.get(); //catches something extra being thrown from this loop that messes with miss's incrementing value
                 }
-                else{
+                else if(arr[row][col] == "[ ]"){
                     arr[row][col] = "[O]";
+                    miss++;
+                }
+                else if(arr[row][col] == "[O]" || arr[row][col] == "[X]"){
+                    cout << "You cannot rehit spots you've already targetted!" << endl;
                 }
             }
         }
 
+    cout << "Misses: " << miss << endl;
     cout << "  0  1  2  3  4  5  6  7  8  9\n";
 	for (int r = 0; r < ROWS; r++)
 	{
@@ -280,7 +290,11 @@ int randomNum(int index, int upperbound){
 }
 
 void prompt(){
-    cout << "\nEnter the position you'd like to attack OR Enter Q to Quit" << endl;
+    cout << "\nEnter the position you'd like to attack OR Enter -1 to Quit" << endl;
     cout << "EXAMPLE RESPONSES: A5, B4" << endl;
     cout << ">> ";
 };
+
+void ending(){
+    cout << "You missed 15 shots or you chose a number off the map! You lose!" << endl;
+}
